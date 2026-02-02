@@ -1,0 +1,12 @@
+# Unix submit description file
+
+executable              = test_snap.sh                                    
+arguments               = $(config_file) $(Item) $(pot) 
+log                     = $(ClusterId)test_snap.log
+output                  = $(ClusterId)test_snap.out
+error                   = $(ClusterId)test_snap.err
+should_transfer_files   = Yes
+when_to_transfer_output = ON_EXIT
+notify_user             = camilla.roselli2@studio.unibo.it
+notification            = Always
+queue 1
