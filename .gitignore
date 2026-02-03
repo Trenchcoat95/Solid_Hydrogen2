@@ -52,3 +52,10 @@
 Thumbs.db
 .vscode/
 .idea/
+
+# -----------------------------
+# Compiled ROOT dictionaries
+# -----------------------------
+*.pcm
+*.so
+*.cxx
