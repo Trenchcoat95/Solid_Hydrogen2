@@ -990,9 +990,9 @@ void test_snap(){
     // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/battisti/camilla_tests/list/FINAL_inner_edep_list_cleaned.txt");
 
 
-    std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/AGG_inner_reco_list.txt");
-    std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/AGG_inner_gtrac_list.txt");
-    std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/AGG_inner_edep_list.txt");
+    std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Generate_file_lists/AGG_inner_reco_list.txt");
+    std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Generate_file_lists/AGG_inner_gtrac_list.txt");
+    std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Generate_file_lists/AGG_inner_edep_list.txt");
 
 
     //crating chains
@@ -1132,7 +1132,7 @@ auto tRough = df.Define("vertex_x", [](const ROOT::VecOps::RVec<double>& pos) { 
 //                                                        "Enu","pxnu","pynu","pznu","nu_Ereco","mu_transverse_mom","n_transverse_mom", "primaries_PDG","mu_px","mu_py","mu_pz", "mu_pxreco","mu_pyreco","mu_pzreco","mu_E","mu_Ereco","n_px","n_py","n_pz","n_E",
 //                                                         "x_ecal","y_ecal","z_ecal", "t_ecal", "e_ecal", "cell_energies","cell_y","cell_z","cell_ID","N_Tracks"});
 
- tRough.Snapshot("Rough_tree", "/storage/gpfs_data/neutrino/users/croselli/root_macros/Rough_tree_CONTROLLO.root", {"EDepSimEvents.EventId", "vertex_x", "vertex_y","vertex_z","vertex_t", "nu_type","st_proc_type","target","Where_int", "Evt_cat",
+ tRough.Snapshot("Rough_tree", "/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Snap_file_processing/Processed_tree.root", {"EDepSimEvents.EventId", "vertex_x", "vertex_y","vertex_z","vertex_t", "nu_type","st_proc_type","target","Where_int", "Evt_cat",
                                                        "Enu","pxnu","pynu","pznu","nu_Ereco", "nu_Preco", 
                                                        "primaries_PDG", "primaries_px","primaries_py", "primaries_pz",
                                                        "mu_px","mu_py","mu_pz", "mu_pxreco","mu_pyreco","mu_pzreco","mu_P","mu_Preco","mu_E","mu_Ereco",

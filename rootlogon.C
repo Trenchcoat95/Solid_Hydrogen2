@@ -3,7 +3,7 @@
     std::cout << "Loading SAND libraries..." << std::endl;
 
     // Path to your compiled libraries (adjust as needed)
-    const char* lib_path = "./";
+    const char* lib_path = "/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests";
     
 
     // Load ROOT dependencies first (if needed)
@@ -12,8 +12,8 @@
 
     // Load all .so libraries (explicitly list them)
     const std::vector<TString> libraries = {
-        "../sandreco/lib/libStruct.so",
-        "./My_libMyDict.so"
+        "/sandreco/lib/libStruct.so",
+        "/Solid_Hydrogen2/My_libMyDict.so"
     };
 
     for (const auto& lib : libraries) {

@@ -7,6 +7,6 @@ source /opt/exp_software/neutrino/al9/env.sh
 
 
 
-root -b -q '/storage/gpfs_data/neutrino/users/croselli/root_macros/rootlogon.C' -q '/storage/gpfs_data/neutrino/users/croselli/root_macros/test_snap.cpp'
+root -b -q '/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/rootlogon.C' -q '/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Snap_file_processing/test_snap.cpp'
 
 

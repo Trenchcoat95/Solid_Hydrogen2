@@ -11,6 +11,18 @@
 *.yml
 
 # -----------------------------
+# Image files
+#-----------------------------
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.tiff
+*.bmp
+*.svg
+*.pdf
+
+# -----------------------------
 # ROOT / HEP / scientific data
 # -----------------------------
 *.root
@@ -59,3 +71,10 @@ Thumbs.db
 *.pcm
 *.so
 *.cxx
+
+#-----------------------------
+# Pycache and Jupyter checkpoints
+#-----------------------------
+.ipynb_checkpoints/
+__pycache__/
+

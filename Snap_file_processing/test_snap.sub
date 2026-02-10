@@ -7,6 +7,6 @@ output                  = $(ClusterId)test_snap.out
 error                   = $(ClusterId)test_snap.err
 should_transfer_files   = Yes
 when_to_transfer_output = ON_EXIT
-notify_user             = camilla.roselli2@studio.unibo.it
+notify_user             = federico.battisti@bo.infn.it
 notification            = Always
 queue 1
