@@ -322,6 +322,17 @@ Double_t transverse_momentum( ROOT::VecOps::RVec<double> primaries_px, ROOT::Vec
                           
 """)
 
+ROOT.gInterpreter.Declare("""
+bool has_muon(const ROOT::VecOps::RVec<int>& pdgs) {
+        for (int x : pdgs) {
+        if (x == -13) {
+            return true; 
+        }
+    }
+    return false;
+}
+""")
+
 
 def df_extend(df):
     df_extended = (df.Define("nearest_segpoint", "Nearest_point(hit_pred, true_n_startX, true_n_startY, true_n_startZ, true_n_startT)")
@@ -330,7 +341,6 @@ def df_extend(df):
                     .Define("distance_ecalpoint", "nearest_ecalpoint[4]")
                     .Define("t_pred_seg", "Predicted_time(n_E_pred,n_px_pred, n_py_pred, n_pz_pred, vertex_t,vertex_x, vertex_y,vertex_z, nearest_segpoint, true_t)")
                     .Define("t_pred_ecal", "Predicted_time(n_E_pred,n_px_pred, n_py_pred, n_pz_pred, vertex_t,vertex_x, vertex_y,vertex_z, nearest_ecalpoint, true_t)")
-                    #.Define("inside2", "neutron_correspondence(hit_pred, x_ecal, y_ecal, z_ecal)")
                     .Define("inside", "neutron_correspondence(hit_pred, x_ecal, y_ecal, z_ecal)")
                     .Define("n_inside", "Sum(inside)")
                     .Define("insideTRUE", "neutron_correspondenceTRUE(hit_pred, true_n_startX,true_n_startY, true_n_startZ)")
@@ -338,6 +348,16 @@ def df_extend(df):
                     .Define("t_res_seg", "t_pred_seg - nearest_segpoint[3]")
                     .Define("t_res_ecal", "t_pred_ecal - nearest_ecalpoint[3]")
                     .Define("Cat", "Cat(target, st_proc_type, Where_int)")
+                    .Define("res", "(mu_Preco - mu_P)/mu_P")
+                    .Define("has_muon", "has_muon(primaries_PDG)")
+                    .Define("res_x", "(mu_pxreco[0] - mu_px[0])/mu_px[0]")
+                    .Define("res_y", "(mu_pyreco[0] - mu_py[0])/mu_py[0]")
+                    .Define("res_z", "(mu_pzreco[0] - mu_pz[0])/mu_pz[0]")
+                    .Define("res_E_mu", "(mu_Ereco[0] - mu_E[0])/mu_pz[0]" )
+                    .Define("res_E_nu", "(nu_Ereco - Enu)/Enu")
+                    .Define("res_px_nu","(nu_Preco[0] - pxnu)/pxnu")
+                    .Define("res_py_nu", "((nu_Preco[1] - pynu)/pynu) + 0.08")
+                    .Define("res_pz_nu","(nu_Preco[2] - pznu)/pznu")
                     )
     return df_extended
 
