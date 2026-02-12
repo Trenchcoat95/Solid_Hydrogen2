@@ -6,7 +6,8 @@ from nbconvert.preprocessors import ExecutePreprocessor
 # List notebooks in execution order
 NOTEBOOKS = [
     "SH_mu_nu_reco_performance.ipynb",
-    "SH_sample_properties.ipynb"
+    "SH_sample_properties.ipynb",
+    "SH_neutron_reco_performance.ipynb",
 ]
 
 # Directory where notebooks live

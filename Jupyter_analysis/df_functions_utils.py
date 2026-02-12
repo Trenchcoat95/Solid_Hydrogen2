@@ -358,6 +358,11 @@ def df_extend(df):
                     .Define("res_px_nu","(nu_Preco[0] - pxnu)/pxnu")
                     .Define("res_py_nu", "((nu_Preco[1] - pynu)/pynu) + 0.08")
                     .Define("res_pz_nu","(nu_Preco[2] - pznu)/pznu")
+                    .Define("res_pn_x", "(n_px_pred - n_px[0])/ n_px[0]") 
+                    .Define("res_pn_y", "(n_py_pred - n_py[0])/ n_py[0]")
+                    .Define("res_pn_z", "(n_pz_pred - n_pz[0])/ n_pz[0]")
+                    .Define("res_P_n", "(n_Ppred - n_P)/n_P")
+                    .Define("res_E_n", "(n_E_pred - n_E[0])/n_E[0]")
                     )
     return df_extended
 
@@ -387,3 +392,18 @@ def df_addtransversemomentum(df):
       )
     
     return df_tr
+
+def df_add_ECAL_pred(df):
+    df_ecal = (df.Define("x_pred", "ROOT::VecOps::RVec<double>{hit_pred[0], hit_pred[3]}")
+                .Define("y_pred", "ROOT::VecOps::RVec<double>{hit_pred[1], hit_pred[4]}")
+                .Define("z_pred", "ROOT::VecOps::RVec<double>{hit_pred[2], hit_pred[5]}")
+                .Define("best_match", "ComparisonPoint(x_ecal,  y_ecal,  z_ecal, t_ecal, true_n_startX, true_n_startY, true_n_startZ, true_n_startT)")
+                .Define("Res_x", "best_match[0] - best_match[4]" )
+                .Define("Res_y", "best_match[1] - best_match[5]" )
+                .Define("Res_z", "best_match[2] - best_match[6]" )
+                .Define("Res_t", "best_match[3] - best_match[7]" )
+                .Define("Res_seg_x", "hit_pred[0] - nearest_segpoint[0]")
+                .Define("Res_seg_y", "hit_pred[1] - nearest_segpoint[1]")
+                .Define("Res_seg_z", "hit_pred[2] - nearest_segpoint[2]")
+            )
+    return df_ecal
