@@ -1,6 +1,6 @@
 # Unix submit description file
 
-executable              = snap_fie_processing.sh                                    
+executable              = Snap_file_processing.sh                                    
 arguments               = $(config_file) $(Item) $(pot) 
 log                     = $(ClusterId)test_snap.log
 output                  = $(ClusterId)test_snap.out

@@ -25,7 +25,7 @@ for i in $(seq ${n_start} ${n_end}); do
   base_dir="${base_path}/${base_name}/${base_name}_${i}"
 
   percent=$(( (i - ${n_start} + 1) * 100 / (${n_end} - ${n_start} + 1) ))
-  printf "\rProgress: %3d%%" "$percent"
+  printf "\rGenerating file lists: %3d%%" "$percent"
 
   reco="${base_dir}/sand-events.${i}.reco.root"
   gtrac="${base_dir}/sand-events.${i}.gtrac.root"

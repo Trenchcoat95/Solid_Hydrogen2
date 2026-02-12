@@ -1,0 +1,12 @@
+# Unix submit description file
+
+executable              = Solid_Hydrogen2_batch.sh                                    
+arguments               = $(config_file) $(Item) $(pot) 
+log                     = $(ClusterId)Solid_Hydrogen2_batch.log
+output                  = $(ClusterId)Solid_Hydrogen2_batch.out
+error                   = $(ClusterId)Solid_Hydrogen2_batch.err
+should_transfer_files   = Yes
+when_to_transfer_output = ON_EXIT
+notify_user             = federico.battisti@bo.infn.it
+notification            = Always
+queue 1

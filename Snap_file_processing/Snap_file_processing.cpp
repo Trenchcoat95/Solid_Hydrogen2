@@ -833,7 +833,7 @@ ROOT::VecOps::RVec<double> true_t_pos(const ROOT::VecOps::RVec<TG4Trajectory>& t
 
 
 
-void snap_file_processing(){
+void Snap_file_processing(){
 
     //loading geometry file
     TFile* file = TFile::Open("/storage/gpfs_data/neutrino/users/amenga/prod-scripts/production/SAND_innervol_gisimple_1M/SAND_innervol_gisimple_1M_3013/sand-events.3013.edep.root");
