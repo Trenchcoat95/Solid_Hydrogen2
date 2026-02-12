@@ -29,10 +29,10 @@ using std::endl;
 
 
 
-void unfolding(){
+void Unfolding(){
 
     /*read the histogram from a file.root*/
-    TFile *f = TFile::Open("/storage/gpfs_data/neutrino/users/croselli/root_macros/Solid_Hydrogen2/solid_H_histo_unfolding_26_11.root");
+    TFile *f = TFile::Open("Unfolding_output/SH_pre_unfolding.root");
 
     /*MC signal*/
     TH2F *res = (TH2F*)f->Get("h_matrix");
@@ -81,7 +81,7 @@ void unfolding(){
     
     
     
-    TFile *fout = new TFile("Unfolding_output_26_11.root", "RECREATE");
+    TFile *fout = new TFile("Unfolding_output/Unfolding_results.root", "RECREATE");
     
     H_sub->Write();
     H_corr->Write();
@@ -97,7 +97,6 @@ void unfolding(){
     hUnfCorr->Draw("SAME");
 
     c->Write();
-    //c->SaveAs("histo_vertex_innervol_GS.png");
 
 
     fout->Close();

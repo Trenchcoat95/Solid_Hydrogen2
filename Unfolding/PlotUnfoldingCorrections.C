@@ -50,17 +50,18 @@ TH2D* Find2D(TFile* f, const char** names) {
 
 void SaveCanvasIfValid(TCanvas* c, const TString& base, const char* suffix) {
     if (!c) return;
-    TString png = TString::Format("%s_%s.png", base.Data(), suffix);
+    //TString png = TString::Format("%s_%s.png", base.Data(), suffix);
     TString pdf = TString::Format("%s_%s.pdf", base.Data(), suffix);
-    c->SaveAs(png);
+    //c->SaveAs(png);
     c->SaveAs(pdf);
-    cout << "[SAVED] " << png.Data() << " , " << pdf.Data() << endl;
+    //cout << "[SAVED] " << png.Data() << " , " << pdf.Data() << endl;
+    cout << "[SAVED] " << pdf.Data() << endl;
 }
 
 //==============================================================
 // Main macro
 //==============================================================
-void PlotUnfoldingCorrections(const char* filename = "data/output.root") {
+void PlotUnfoldingCorrections(const char* filename = "Unfolding_output/Unfolding_results.root") {
     gStyle->SetOptStat(0);
     gStyle->SetPaintTextFormat("5.1f");
     gStyle->SetTitleFontSize(0.045);
@@ -76,7 +77,7 @@ void PlotUnfoldingCorrections(const char* filename = "data/output.root") {
     TH1D* hEff = Find1D(f, tryNamesEfficiency);
     TH2D* hResp = Find2D(f, tryNamesResponse);
 
-    TString base = gSystem->BaseName(filename);
+    TString base = filename;
     base.ReplaceAll(".root", "");
 
     // --- 1) Acceptance canvas ---
