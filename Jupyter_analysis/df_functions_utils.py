@@ -11,6 +11,127 @@ import array
 
 ROOT.gSystem.Load("libROOTDataFrame")
 
+ROOT.gInterpreter.Declare("""
+ROOT::VecOps::RVec<double> Predicted_hit(double px, double py, double pz,
+                                         double x0, double y0, double z0)
+{
+
+    // ECAL cylinder dimensions (mm)
+    const double r_out = 2230.0;
+    const double r_in  = 2000.0;
+    const double x_min = -2150.0;
+    const double x_max =  2150.0;
+
+    // Cylinder center
+    const double cx = 0.0;
+    const double cy = -2384.73;
+    const double cz = 23910.0;
+
+    // Normalize direction
+    double norm = std::sqrt(px*px + py*py + pz*pz);
+    if (norm == 0) return {0,0,0,0,0,0};
+
+    double nx = px / norm;
+    double ny = py / norm;
+    double nz = pz / norm;
+
+                          
+    //cilinder intersection
+    auto intersect = [&](double R)
+    {
+        // Shift ray origin into cylinder frame
+        double Y = y0 - cy;
+        double Z = z0 - cz;
+
+        // Quadratic coefficients for (y^2 + z^2 = R^2)
+        double A = ny*ny + nz*nz;
+        double B = 2*(Y*ny + Z*nz);
+        double C = Y*Y + Z*Z - R*R;
+
+        double D = B*B - 4*A*C;
+        if (D < 0 || A == 0)
+            return std::vector<double>{};
+
+        double sqrtD = std::sqrt(D);
+        double t1 = (-B + sqrtD)/(2*A);
+        double t2 = (-B - sqrtD)/(2*A);
+
+        double t = 1e99;
+        if (t1 > 0) t = std::min(t, t1);
+        if (t2 > 0) t = std::min(t, t2);
+
+        if (t == 1e99)
+            return std::vector<double>{};
+
+        // Intersection point
+        double xi = x0 + t*nx;
+        double yi = y0 + t*ny;
+        double zi = z0 + t*nz;
+        return std::vector<double>{xi, yi, zi};
+    };
+                          
+
+    // plane intersection
+    auto intersect_plane = [&](double x_plane) {
+                          
+        if (nx == 0) return std::vector<double>{0.0,0.0,0.0}; 
+        double t = (x_plane - x0) / nx;
+        if (t <= 0) return std::vector<double>{0.0,0.0,0.0};  // plane behind start
+
+        double xi = x_plane;
+        double yi = y0 + t*ny;
+        double zi = z0 + t*nz;
+        return std::vector<double>{xi, yi, zi};
+    };
+
+                      
+    // Compute inner & outer intersections with cylinder
+    auto in  = intersect(r_in);
+    auto out = intersect(r_out);
+
+    // If intersection missing
+    if (in.empty())  in  = {0,0,0};
+    if (out.empty()) out = {0,0,0};
+
+    ROOT::VecOps::RVec<double> result;
+    result.insert(result.end(), in.begin(), in.end());
+    result.insert(result.end(), out.begin(), out.end());
+    
+    //Endcpas
+        if (result[0] < x_min) {
+        double xA = -1690;
+        double xB = -1690 - 460.0;
+
+        auto pA = intersect_plane(xA);
+        auto pB = intersect_plane(xB);
+
+        ROOT::VecOps::RVec<double> res_planes;
+        res_planes.insert(res_planes.end(), pA.begin(), pA.end());
+        res_planes.insert(res_planes.end(), pB.begin(), pB.end());
+        return res_planes;  
+    }
+
+        if (result[0] > x_max) {
+        double xA = 1690;
+        double xB = 1690 + 460.0;
+
+        auto pA = intersect_plane(xA);
+        auto pB = intersect_plane(xB);
+
+        ROOT::VecOps::RVec<double> res_planes;
+        res_planes.insert(res_planes.end(), pA.begin(), pA.end());
+        res_planes.insert(res_planes.end(), pB.begin(), pB.end());
+        return res_planes;  
+    }                                 
+                                           
+    return result;
+                          
+}
+""")
+
+
+
+
 #select the TRUE events with a antimuon and a nuetron in the final state 
 ROOT.gInterpreter.Declare("""
 bool IsMuonNeutron(const ROOT::VecOps::RVec<int>& pdgs) {
@@ -407,3 +528,38 @@ def df_add_ECAL_pred(df):
                 .Define("Res_seg_z", "hit_pred[2] - nearest_segpoint[2]")
             )
     return df_ecal
+
+def df_add_columns_for_display(df):
+    df_extended = (df.Define("hit_pred2", "Predicted_hit( n_px_pred, n_py_pred, n_pz_pred, vertex_x, vertex_y, vertex_z)")
+                 .Define("inside", "neutron_correspondence( hit_pred, x_ecal, y_ecal, z_ecal)")
+                 .Define("n_inside", "Sum(inside)")
+    )
+    true_filter = 'IsMuonNeutron(primaries_PDG) && target == "tgt:1000010010" && st_proc_type == "proc:Weak[CC],QES"'
+    volume_filter = "vertex_z > 22850"
+    reco_filter = "Reco_ok(N_tracks, mu_pxreco, mu_pyreco, mu_pzreco, mu_Preco )"
+    track_filter = "N_tracks == 1"
+    space_filter = "n_inside > 0"
+    df_flag = (df_extended.Define("true_flag", f"({true_filter}) ? 1 : 0")
+                    .Define("volume_flag", f"({volume_filter}) ? 1 : 0")
+                    .Define("reco_flag", f"({reco_filter}) ? 1 : 0")
+                    .Define("track_flag", f"({track_filter}) ? 1 : 0")
+                    .Define("space_flag", f"({space_filter}) ? 1 : 0")
+                    .Define("x1", "hit_pred2[0]")
+                    .Define("y1", "hit_pred2[1]")
+                    .Define("z1", "hit_pred2[2]")
+                    .Define("x2", "hit_pred2[3]")
+                    .Define("y2", "hit_pred2[4]")
+                    .Define("z2", "hit_pred2[5]")
+                    .Define("px_n", "n_px[0]")
+                    .Define("py_n", "n_py[0]")
+                    .Define("pz_n", "n_pz[0]")
+                    .Define("true_mom", "sqrt(px_n*px_n + py_n*py_n + pz_n*pz_n)" )
+                    .Define("px_end", "px_n/true_mom")
+                    .Define("py_end", "py_n/true_mom")
+                    .Define("pz_end", "pz_n/true_mom")
+                    .Define("pred_mom", "sqrt(n_px_pred*n_px_pred + n_py_pred*n_py_pred + n_pz_pred*n_pz_pred)" )
+                    .Define("px_end2", "n_px_pred/pred_mom")
+                    .Define("py_end2", "n_py_pred/pred_mom")
+                    .Define("pz_end2", "n_pz_pred/pred_mom")
+    )
+    return df_flag
