@@ -255,16 +255,7 @@ std::vector<int> Particles_with_track(const ROOT::VecOps::RVec<particle>& partic
     return particles_with_track;
 }
 
-/*function to get the nuber of points of the track*/
-// std::vector<int> N_points(ROOT::VecOps::RVec<track>& track){
-//     std::vector<int> N_points;
 
-//     for (std::size_t i = 0; i < track.size(); ++i){
-//          N_points.push_back(track[i].n_points);
-//     }
-
-//     return N_points;
-// }
 std::vector<int> N_points(const ROOT::VecOps::RVec<particle>& particles){
     std::vector<int> N_points;
 
@@ -276,16 +267,7 @@ std::vector<int> N_points(const ROOT::VecOps::RVec<particle>& particles){
     return N_points;
 }
 
-/*function to get the chi2 of the track*/
-// std::vector<double> Chi2(ROOT::VecOps::RVec<track>& track){
-//     std::vector<double> chi2;
 
-//     for (std::size_t i = 0; i < track.size(); ++i){
-//          chi2.push_back(track[i].chi2_cr);
-//     }
-
-//     return chi2;
-// }
 std::vector<double> Chi2(const ROOT::VecOps::RVec<particle>& particles){
     std::vector<double> chi2;
 
@@ -530,73 +512,6 @@ ROOT::VecOps::RVec<double> Predicted_time(const Double_t n_E_pred, const Double_
                                 return time;
 }
 
-
-/*function to get the true neutron hit*/
-// ROOT::VecOps::RVec<TLorentzVector> true_n_start(const std::map<std::string, std::vector<TG4HitSegment>>& SegmentDetectors, const ROOT::VecOps::RVec<std::vector<TG4PrimaryParticle>>& particles)
-// {
-//     ROOT::VecOps::RVec<TLorentzVector> starts;
-
-//     for (const auto& primaryVec : particles) {
-//         for (const auto& particle : primaryVec) {
-
-//             if (particle.GetPDGCode() == 2112) {
-//                 int neutronTrackId = particle.GetTrackId();
-
-//                 for (const auto& [name, hitSegments] : SegmentDetectors) {
-
-//                     if (name == "EMCalSci") {
-
-//                         for (const auto& hitSegment : hitSegments) {
-//                             if (hitSegment.GetPrimaryId() == neutronTrackId) {
-//                                 starts.push_back(hitSegment.GetStart());
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-
-//     return starts;
-//}
-
-// ROOT::VecOps::RVec<double> true_n_start(const std::map<std::string, std::vector<TG4HitSegment>>& SegmentDetectors, const std::vector<TG4PrimaryParticle>& particles)
-// {
-//     std::cout<<"sono_qui"<<std::endl;
-
-//     ROOT::VecOps::RVec<double> starts;
-//     //ROOT::VecOps::RVec<int> neutron_Id;
-
-//         std::cout<<"sono dentro al primo for"<<std::endl;
-
-//         for (const auto& particle : particles) {
-
-//             if (particle.GetPDGCode() == 2112) {
-//                 int neutronTrackId = particle.GetTrackId();
-
-//                 for (const auto& [name, hitSegments] : SegmentDetectors) {
-
-//                     if (name == "EMCalSci") {
-
-//                         for (const auto& hitSegment : hitSegments) {
-//                             if (hitSegment.GetPrimaryId() == neutronTrackId) {
-
-//                                 const TLorentzVector& start = hitSegment.GetStart();
-//                                 //starts.push_back(hitSegment.GetStart());
-//                             starts.push_back(start.X());
-//                             starts.push_back(start.Y());
-//                             starts.push_back(start.Z());
-//                             starts.push_back(start.T());
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-
-
-//     return starts;
-// }
 ROOT::VecOps::RVec<double> true_n_startX(const std::map<std::string, std::vector<TG4HitSegment>>& SegmentDetectors, const std::vector<TG4PrimaryParticle>& particles)
 {
     ROOT::VecOps::RVec<double> starts;
@@ -918,78 +833,13 @@ ROOT::VecOps::RVec<double> true_t_pos(const ROOT::VecOps::RVec<TG4Trajectory>& t
 
 
 
-// ROOT::VecOps::RVec<TLorentzVector> true_trajectory_points(const ROOT::VecOps::RVec<TG4Trajectory>& trajectories){
-//     ROOT::VecOps::RVec<TLorentzVector> positions;
-//     for (const auto& trajectory : trajectories) {
-//         if (trajectory.GetPDGCode() == 2112) {
-//             const auto& points = trajectory.GetPoints(); 
-//             for (const auto& point : points) {
-//                 positions.push_back(point.GetPosition());
-//             }
-//         }
-//     }
-
-//     return positions;
-// }
-
-
-
 void test_snap(){
 
-    //leoading geometry files
-    // TFile* file = TFile::Open("/storage/gpfs_data/neutrino/users/croselli/productions/prod_al9/prod_tests/SAND/SAND_0/sand-events.0.edep.root");
-    TFile* file = TFile::Open("/storage/gpfs_data/neutrino/users/croselli/productions/prod_al9/prod_tests/SAND_innerVOL_10/SAND_innerVOL_10_0/sand-events.0.edep.root");
+    //loading geometry file
+    TFile* file = TFile::Open("/storage/gpfs_data/neutrino/users/amenga/prod-scripts/production/SAND_innervol_gisimple_1M/SAND_innervol_gisimple_1M_3013/sand-events.3013.edep.root");
     TGeoManager* gGeoManager = dynamic_cast<TGeoManager*>(file->Get("EDepSimGeometry"));
 
-    //read the correct files
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/GSIM_reco_list.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/GSIM_gtrac_list.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/GSIM_edep_list.txt");
-
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_reco_list.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_gtrac_list.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_edep_list.txt");
-
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/EVT1_reco_list.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/EVT1_gtrac_list.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/EVT1_edep_list.txt");
-    
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/tot_EVT_reco_list.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/tot_EVT_gtrac_list.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/tot_EVT_edep_list.txt");
-     
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_reco_list2.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_gtrac_list2.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_edep_list2.txt");
-
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_reco_listGS.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_gtrac_listGS.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_edep_listGS.txt");
-
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_reco_listGS_D.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_gtrac_listGS_D.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/inner_edep_listGS_D.txt");
-
-    /*PRODUZIONE GS DA 1M DI EVENTI FATTA CON 1M DI EVENTI*/
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/GS_inner_reco_list.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/GS_inner_gtrac_list.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/GS_inner_edep_list.txt");
-
-    /*PRODUZIONE GS con pochi eventi, 9000*/
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/MINI_reco_list.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/MINI_gtrac_list.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/MINI_edep_list.txt");
-    
-    /*PRODUZIONE FATTA CON 2M DI EVENTI GS*/
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/FINAL_inner_reco_list.txt"); CORROTTI
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/FINAL_inner_gtrac_list.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/croselli/Chek_file/FINAL_inner_edep_list.txt");
-
-    // std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/battisti/camilla_tests/list/FINAL_inner_reco_list_cleaned.txt");
-    // std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/battisti/camilla_tests/list/FINAL_inner_gtrac_list_cleaned.txt");
-    // std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/battisti/camilla_tests/list/FINAL_inner_edep_list_cleaned.txt");
-
-
+    ///Reading file lists
     std::vector<std::string> reco_files   = readFileList("/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Generate_file_lists/AGG_inner_reco_list.txt");
     std::vector<std::string> gtrac_files  = readFileList("/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Generate_file_lists/AGG_inner_gtrac_list.txt");
     std::vector<std::string> edep_files   = readFileList("/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Generate_file_lists/AGG_inner_edep_list.txt");
@@ -1013,44 +863,25 @@ void test_snap(){
     add_files(ch_EDepSimEvents, edep_files);
 
 
-    // ch_tEvent->Add("/storage/gpfs_data/neutrino/users/croselli/productions/prod_al9/prod_tests/SAND_AN/SAND_AN_*/sand-events.*.reco.root");
-   // ch_gRooTracker->Add("/storage/gpfs_data/neutrino/users/croselli/productions/prod_al9/prod_tests/SAND_AN/SAND_AN_*/sand-events.*.gtrac.root");
-   // ch_EDepSimEvents->Add("/storage/gpfs_data/neutrino/users/croselli/productions/prod_al9/prod_tests/SAND_AN/SAND_AN_*/sand-events.*.edep.root");
-   // ch_tReco->Add("/storage/gpfs_data/neutrino/users/croselli/productions/prod_al9/prod_tests/SAND_AN/SAND_AN_*/sand-events.*.reco.root");
+    ch_tEvent->AddFriend(ch_gRooTracker, "gRooTracker");
+    ch_tEvent->AddFriend(ch_EDepSimEvents, "EDepSimEvents");
+    ch_tEvent->AddFriend(ch_tReco, "tReco");
 
-// ch_tEvent->Add("@reco_list.txt");
-// ch_gRooTracker->Add("@gtrac_list.txt");
-// ch_EDepSimEvents->Add("@edep_list.txt");
-// ch_tReco->Add("@reco_list.txt");
+    //create the RDF
+    ROOT::RDataFrame df(*ch_tEvent);
 
-ch_tEvent->AddFriend(ch_gRooTracker, "gRooTracker");
-ch_tEvent->AddFriend(ch_EDepSimEvents, "EDepSimEvents");
-ch_tEvent->AddFriend(ch_tReco, "tReco");
 
-//create the RDF
-ROOT::RDataFrame df(*ch_tEvent);
-
-/*
-auto column_names = df.GetColumnNames();
-    for (size_t i = 0; i < column_names.size(); ++i) {
-        std::cout << i << ". " << column_names[i] << std::endl;
-    }
-*/
-
-auto tRough = df.Define("vertex_x", [](const ROOT::VecOps::RVec<double>& pos) { return pos[0] * 1000; }, {"gRooTracker.EvtVtx"}) //mm to match the geometry
-                .Define("vertex_y", [](const ROOT::VecOps::RVec<double>& pos) { return pos[1] * 1000 ; }, {"gRooTracker.EvtVtx"}) 
-                .Define("vertex_z", [](const ROOT::VecOps::RVec<double>& pos) { return pos[2] * 1000; }, {"gRooTracker.EvtVtx"})
-                .Define("vertex_t", [](const ROOT::VecOps::RVec<double>& pos) { return pos[3] ; }, {"gRooTracker.EvtVtx"})
-                .Define("nu_type", [](const ROOT::VecOps::RVec<Int_t>& p) {return p[0]; }, {"gRooTracker.StdHepPdg"})
-                // .Define("nu_E", [](const ROOT::VecOps::RVec<double>& mom4) {return mom4[3]; }, {"gRooTracker.StdHepP4"})
-                //.Define("target", [](const ROOT::VecOps::RVec<Int_t>& p) {return p[1]; }, {"StdHepPdg"})
-                //.Define("primaries_PDG", [](const ROOT::VecOps::RVec<Int_t>& p) {return ROOT::VecOps::RVec<Int_t>(p.begin() + 2, p.end());}, {"StdHepPdg"})
-                .Define("SplitParts", SplitTString , {"gRooTracker.EvtCode.fString"})
-                .Define("st_proc_type", FilterProcs, {"SplitParts"})
-                .Define("target", FilterTGT, {"SplitParts"})                          
-                .Define("Where_int", Where_int, {"vertex_x", "vertex_y","vertex_z"})
-                .Define("Evt_cat", Evt_cat, {"nu_type", "target", "st_proc_type","Where_int"})
-                .Define("primaries_PDG", Primaries_PDG, {"event.particles.primary","event.particles.pdg"})
+    auto tRough = df.Define("vertex_x", [](const ROOT::VecOps::RVec<double>& pos) { return pos[0] * 1000; }, {"gRooTracker.EvtVtx"}) //mm to match the geometry
+                    .Define("vertex_y", [](const ROOT::VecOps::RVec<double>& pos) { return pos[1] * 1000 ; }, {"gRooTracker.EvtVtx"}) 
+                    .Define("vertex_z", [](const ROOT::VecOps::RVec<double>& pos) { return pos[2] * 1000; }, {"gRooTracker.EvtVtx"})
+                    .Define("vertex_t", [](const ROOT::VecOps::RVec<double>& pos) { return pos[3] ; }, {"gRooTracker.EvtVtx"})
+                    .Define("nu_type", [](const ROOT::VecOps::RVec<Int_t>& p) {return p[0]; }, {"gRooTracker.StdHepPdg"})
+                    .Define("SplitParts", SplitTString , {"gRooTracker.EvtCode.fString"})
+                    .Define("st_proc_type", FilterProcs, {"SplitParts"})
+                    .Define("target", FilterTGT, {"SplitParts"})                          
+                    .Define("Where_int", Where_int, {"vertex_x", "vertex_y","vertex_z"})
+                    .Define("Evt_cat", Evt_cat, {"nu_type", "target", "st_proc_type","Where_int"})
+                    .Define("primaries_PDG", Primaries_PDG, {"event.particles.primary","event.particles.pdg"})
                     .Define("primaries_px", Primaries_momentum, {"event.particles.primary","event.particles.pxtrue"})
                     .Define("primaries_py", Primaries_momentum, {"event.particles.primary","event.particles.pytrue"})
                     .Define("primaries_pz", Primaries_momentum, {"event.particles.primary","event.particles.pztrue"})
@@ -1073,17 +904,11 @@ auto tRough = df.Define("vertex_x", [](const ROOT::VecOps::RVec<double>& pos) { 
                     .Define("n_py", n_momentum, {"primaries_PDG","primaries_py"})
                     .Define("n_pz", n_momentum, {"primaries_PDG","primaries_pz"})
                     .Define("n_P", "sqrt(n_px[0]*n_px[0] + n_py[0]*n_py[0] + n_pz[0]*n_pz[0])")
-                    // .Define("n_pxreco", n_momentum, {"primaries_PDG","primaries_pxreco"})
-                    // .Define("n_pyreco", n_momentum, {"primaries_PDG","primaries_pyreco"})
-                    // .Define("n_pzreco", n_momentum, {"primaries_PDG","primaries_pzreco"})
                     .Define("n_E", n_momentum, {"primaries_PDG","primaries_E"})
                     .Define("n_Ereco", n_momentum, {"primaries_PDG","primaries_Ereco"})
                     .Define("nu_Ereco", NeutrinoEnergy, {"mu_Ereco", "mu_pxreco", "mu_pyreco", "mu_pzreco", "pxnu","pynu","pznu"})
-                    //.Define("nu_Ereco", NeutrinoEnergy, {"mu_Ereco", "mu_pxreco", "mu_pyreco", "mu_pzreco", "pxnu","pynu","pznu","primaries_PDG","Enureco"})
                     .Define("n_E_pred", Neutron_predicted_energy, {"nu_Ereco", "mu_Ereco"})
-                    // .Define("nu_Preco", NeutrinoMomentum, {"nu_Ereco","pxnu","pynu","pznu"})
                     .Define("nu_Preco", NeutrinoMomentum, {"nu_Ereco"})
-                    // .Define("n_P_pred", Neutron_predicted_momentum, {"nu_Preco", "mu_pxreco", "mu_pyreco", "mu_pzreco"})
                     .Define("n_px_pred", Neutron_predicted_momentumX, {"nu_Preco", "mu_pxreco"})
                     .Define("n_py_pred", Neutron_predicted_momentumY, {"nu_Preco", "mu_pyreco"})
                     .Define("n_pz_pred", Neutron_predicted_momentumZ, {"nu_Preco", "mu_pzreco"})
@@ -1103,48 +928,32 @@ auto tRough = df.Define("vertex_x", [](const ROOT::VecOps::RVec<double>& pos) { 
                     .Define("true_t", true_t_pos,{"EDepSimEvents.Trajectories"})
                     .Define("hit_pred", Predicted_hit, {"n_px_pred","n_py_pred", "n_pz_pred","vertex_x","vertex_y","vertex_z"})
                     .Define("Beta", "TMath::Sqrt(n_px_pred*n_px_pred + n_py_pred*n_py_pred + n_pz_pred*n_pz_pred) / n_E_pred")
-                    //.Define("t_pred", Predicted_time, {"Beta","vertex_t","hit_pred","vertex_x","vertex_y","vertex_z"})
-                          .Define("x_ecal", [](const ROOT::VecOps::RVec<Double_t>& x) {return x;}, {"tReco.cluster.x"})
-                          .Define("y_ecal", [](const ROOT::VecOps::RVec<Double_t>& y) {return y;}, {"tReco.cluster.y"})
-                          .Define("z_ecal", [](const ROOT::VecOps::RVec<Double_t>& z) {return z;}, {"tReco.cluster.z"})
-                          .Define("t_ecal", [](const ROOT::VecOps::RVec<Double_t>& t) {return t;}, {"tReco.cluster.t"})
-                          .Define("e_ecal", [](const ROOT::VecOps::RVec<Double_t>& e) {return e;}, {"tReco.cluster.e"})
-                          .Define("cell_energies", ExtractEnergies, {"tReco.cluster"})
-                          .Define("cell_x", Extract_X_cell ,{"tReco.cluster"})
-                          .Define("cell_y", Extract_Y_cell ,{"tReco.cluster"})
-                          .Define("cell_z", Extract_Z_cell ,{"tReco.cluster"})
-                          .Define("cell_ID", CellID, {"tReco.cluster"})
-                          .Define("N_tracks", [](const ROOT::VecOps::RVec<track>& t){ return (int)t.size();}, {"tReco.track"})
-                          .Define("tracks_ID", Particles_with_track, {"particles"})
-                          .Define("N_points", N_points, {"particles"})
-                          .Define("chi2", Chi2, {"particles"})
-                          .Define("neutron_cluster", Neutron_cluster, {"particles"})
-                          .Define("t_pred", Predicted_time,{"n_E_pred", "n_px_pred","n_py_pred","n_pz_pred","vertex_t","vertex_x","vertex_y","vertex_z","x_ecal","y_ecal","z_ecal"});
+                    .Define("x_ecal", [](const ROOT::VecOps::RVec<Double_t>& x) {return x;}, {"tReco.cluster.x"})
+                    .Define("y_ecal", [](const ROOT::VecOps::RVec<Double_t>& y) {return y;}, {"tReco.cluster.y"})
+                    .Define("z_ecal", [](const ROOT::VecOps::RVec<Double_t>& z) {return z;}, {"tReco.cluster.z"})
+                    .Define("t_ecal", [](const ROOT::VecOps::RVec<Double_t>& t) {return t;}, {"tReco.cluster.t"})
+                    .Define("e_ecal", [](const ROOT::VecOps::RVec<Double_t>& e) {return e;}, {"tReco.cluster.e"})
+                    .Define("cell_energies", ExtractEnergies, {"tReco.cluster"})
+                    .Define("cell_x", Extract_X_cell ,{"tReco.cluster"})
+                    .Define("cell_y", Extract_Y_cell ,{"tReco.cluster"})
+                    .Define("cell_z", Extract_Z_cell ,{"tReco.cluster"})
+                    .Define("cell_ID", CellID, {"tReco.cluster"})
+                    .Define("N_tracks", [](const ROOT::VecOps::RVec<track>& t){ return (int)t.size();}, {"tReco.track"})
+                    .Define("tracks_ID", Particles_with_track, {"particles"})
+                    .Define("N_points", N_points, {"particles"})
+                    .Define("chi2", Chi2, {"particles"})
+                    .Define("neutron_cluster", Neutron_cluster, {"particles"})
+                    .Define("t_pred", Predicted_time,{"n_E_pred", "n_px_pred","n_py_pred","n_pz_pred","vertex_t","vertex_x","vertex_y","vertex_z","x_ecal","y_ecal","z_ecal"});
 
-// auto tFiltered = tRough.Filter("nu_type == -14");
-//                         .Filter("Evt_cat != 0");
-//Filter("st_proc_type == \"proc:Weak[CC],QES\"")
-                    //    .Filter("nu_type == -14");
-
-
-
-//  tFiltered.Snapshot("Filtered_tree", "B_Filtered_tree_15_09.root", {"EDepSimEvents.EventId", "vertex_x", "vertex_y","vertex_z","vertex_t", "nu_type","st_proc_type","target","Where_int", "Evt_cat",
-//                                                        "Enu","pxnu","pynu","pznu","nu_Ereco","mu_transverse_mom","n_transverse_mom", "primaries_PDG","mu_px","mu_py","mu_pz", "mu_pxreco","mu_pyreco","mu_pzreco","mu_E","mu_Ereco","n_px","n_py","n_pz","n_E",
-//                                                         "x_ecal","y_ecal","z_ecal", "t_ecal", "e_ecal", "cell_energies","cell_y","cell_z","cell_ID","N_Tracks"});
-
- tRough.Snapshot("Rough_tree", "/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Snap_file_processing/Processed_tree.root", {"EDepSimEvents.EventId", "vertex_x", "vertex_y","vertex_z","vertex_t", "nu_type","st_proc_type","target","Where_int", "Evt_cat",
-                                                       "Enu","pxnu","pynu","pznu","nu_Ereco", "nu_Preco", 
-                                                       "primaries_PDG", "primaries_px","primaries_py", "primaries_pz",
-                                                       "mu_px","mu_py","mu_pz", "mu_pxreco","mu_pyreco","mu_pzreco","mu_P","mu_Preco","mu_E","mu_Ereco",
-                                                       "n_px","n_py","n_pz","n_P","n_E", "n_E_pred", "n_px_pred", "n_py_pred", "n_pz_pred","n_Ppred", "hit_pred", "t_pred",
-                                                       "true_n_startX", "true_n_startY", "true_n_startZ","true_n_startT",
-                                                       "true_n_stopX", "true_n_stopY", "true_n_stopZ","true_n_stopT",
-                                                       "true_x_pos","true_y_pos","true_z_pos","true_t",
-                                                       "x_ecal","y_ecal","z_ecal", "t_ecal", "e_ecal", "cell_energies","cell_y","cell_z","cell_ID",
-                                                       "N_tracks","tracks_ID","N_points", "chi2","neutron_cluster"});
-                                                        
-//  tRough.Snapshot("NoN_EVT_Filtered_tree", "NON_EVT_Filtered_tree_11_09.root", {"EDepSimEvents.EventId", "vertex_x", "vertex_y","vertex_z","vertex_t", "nu_type","st_proc_type","target","Where_int", "Evt_cat",
-//                                                        "Enu","pxnu","pynu","pznu","nu_Ereco", "primaries_PDG","mu_px","mu_py","mu_pz", "mu_pxreco","mu_pyreco","mu_pzreco","mu_E","mu_Ereco","n_px","n_py","n_pz","n_E",
-//                                                         "x_ecal","y_ecal","z_ecal", "t_ecal", "e_ecal", "cell_energies","cell_y","cell_z","cell_ID","N_Tracks"});
+    tRough.Snapshot("Rough_tree", "/storage/gpfs_data/neutrino/users/battisti/hydrogen_analysis_tests/Solid_Hydrogen2/Snap_file_processing/Processed_tree.root", {"EDepSimEvents.EventId", "vertex_x", "vertex_y","vertex_z","vertex_t", "nu_type","st_proc_type","target","Where_int", "Evt_cat",
+                    "Enu","pxnu","pynu","pznu","nu_Ereco", "nu_Preco", 
+                    "primaries_PDG", "primaries_px","primaries_py", "primaries_pz",
+                    "mu_px","mu_py","mu_pz", "mu_pxreco","mu_pyreco","mu_pzreco","mu_P","mu_Preco","mu_E","mu_Ereco",
+                    "n_px","n_py","n_pz","n_P","n_E", "n_E_pred", "n_px_pred", "n_py_pred", "n_pz_pred","n_Ppred", "hit_pred", "t_pred",
+                    "true_n_startX", "true_n_startY", "true_n_startZ","true_n_startT",
+                    "true_n_stopX", "true_n_stopY", "true_n_stopZ","true_n_stopT",
+                    "true_x_pos","true_y_pos","true_z_pos","true_t",
+                    "x_ecal","y_ecal","z_ecal", "t_ecal", "e_ecal", "cell_energies","cell_y","cell_z","cell_ID",
+                    "N_tracks","tracks_ID","N_points", "chi2","neutron_cluster"});
 
 }

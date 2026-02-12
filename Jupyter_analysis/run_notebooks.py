@@ -8,6 +8,8 @@ NOTEBOOKS = [
     "SH_mu_nu_reco_performance.ipynb",
     "SH_sample_properties.ipynb",
     "SH_neutron_reco_performance.ipynb",
+    "SH_cuts.ipynb",
+    "SH_pre_unfolding.ipynb",
 ]
 
 # Directory where notebooks live
