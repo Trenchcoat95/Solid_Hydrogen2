@@ -13,7 +13,7 @@
     // Load all .so libraries (explicitly list them)
     const std::vector<TString> libraries = {
         "/sandreco/lib/libStruct.so",
-        "/Solid_Hydrogen2/My_libMyDict.so"
+        "/Solid_Hydrogen2/Snap_file_processing/My_libMyDict.so"
     };
 
     for (const auto& lib : libraries) {
