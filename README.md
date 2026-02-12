@@ -1,6 +1,6 @@
 # Solid_Hydrogen2
 
-Repository for Solid Hydrogen analysis tools and notebooks.
+Repository for Solid Hydrogen analysis tools and notebooks. Reproduces thesis work by Camilla Roselli: https://amslaurea.unibo.it/id/eprint/37654/
 
 Purpose
 - Produce, inspect and prepare reconstructed Solid Hydrogen event samples for analysis and unfolding of neutrino energy.
@@ -11,7 +11,6 @@ Repository layout
 - `Snap_file_processing/` — data-processing scripts that produce the processed ROOT trees.
 - `Jupyter_analysis/` — analysis notebooks and plotting scripts (event displays, performance studies, pre-unfolding histograms).
 - `Unfolding/` — scripts and notebooks to prepare and run unfolding of neutrino energy spectra.
-- `bin/`, `lib/`, `include/`, `build/` — build and runtime artifacts for C++ helper code.
 - `Solid_Hydrogen2.sh` — top-level helper script to run subfolders' scripts.
 
 Quick start
@@ -23,9 +22,9 @@ Run the top-level script (interactive):
 ```bash
 bash Solid_Hydrogen2.sh
 ```
-Check script syntax without running:
+A batch script that is submittable to the CNAF machines is also provided and can be run as:
 ```bash
-bash -n Solid_Hydrogen2.sh
+condor_submit Solid_Hydrogen2_batch.sh
 ```
 
 Typical notebook usage
@@ -36,6 +35,7 @@ Dependencies
 - ROOT with PyROOT (ROOT 6+)
 - Python packages: `numpy`, `plotly` (and optionally `kaleido` to export images), plus any local helper modules (e.g., `df_functions_utils.py`).
 - Build tools and compilers if using the C++ code under `src/` and `include/`.
+- A compiled version of sandreco (legacy version) https://github.com/DUNE/sandreco
 
 Notes
 - The notebooks rely on a local helper module `df_functions_utils.py` for dataframe extension and selection flags. Keep that module on `PYTHONPATH` or in the same folder as the notebooks.
