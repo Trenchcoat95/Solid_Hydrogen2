@@ -22,9 +22,6 @@ using std::endl;
 
 #include "RooUnfoldResponse.h"
 #include "RooUnfoldBayes.h"
-// #include "RooUnfoldSvd.h"
-// #include "RooUnfoldTUnfold.h"
-// #include "RooUnfoldIds.h"
 #endif
 
 
