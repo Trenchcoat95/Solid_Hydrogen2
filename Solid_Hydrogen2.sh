@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Source code environment
+source /opt/exp_software/neutrino/al9/env.sh
+
+# Activate your desired python environment 
+source /storage/gpfs_data/neutrino/users/battisti/python_venvs/basic_venv_3_9_21/bin/activate
+
 read -p "Do you want to process the files as well? (y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then

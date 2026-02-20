@@ -7,12 +7,12 @@
 # Output files are named {PROD_TITLE}_{type}_list.txt and contain absolute paths for downstream analysis.
 # A list of available productions and their configurations is provided in the comments for reference.
 
-#---------------------------------------ADDITIONAL FILES NOT USED FOR THESIS BUT UP-TO-DATE -----------------------------------------------------
+#---------------------------------------ALL GSIMPLE FILES PRODUCED FOR THESIS -----------------------------------------------------
 
 PROD_TITLE="AGG_inner"
 base_path="/storage/gpfs_data/neutrino/users/amenga/prod-scripts/production"
 base_name="SAND_innervol_gisimple_1M"
-n_start=3013
+n_start=0
 n_end=5012
 
 >${PROD_TITLE}_reco_list.txt

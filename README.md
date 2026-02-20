@@ -3,7 +3,10 @@
 Repository for Solid Hydrogen analysis tools and notebooks. Reproduces thesis work by Camilla Roselli: https://amslaurea.unibo.it/id/eprint/37654/
 
 Purpose
-- Produce, inspect and prepare reconstructed Solid Hydrogen event samples for analysis and unfolding of neutrino energy.
+- Produce, inspect and prepare reconstructed Solid Hydrogen event samples for analysis and unfolding of neutrino energy. 
+    - The data production was done using the simulation chain outlined in https://baltig.infn.it/dune/prod-scripts
+    - The digization and reconstruction was done using `sand-reco legacy` and specifically this branch: https://github.com/DUNE/sandreco/tree/109-add-mc-based-measurements-for-kf
+    - For example input files on the CNAF machines look at `/storage/gpfs_data/neutrino/users/amenga/prod-scripts/production/SAND_innervol_gisimple_1M` 
 - Provide interactive event displays and plotting utilities.
 
 Repository layout
@@ -35,14 +38,12 @@ Dependencies
 - ROOT with PyROOT (ROOT 6+)
 - Python packages: `numpy`, `plotly` (and optionally `kaleido` to export images), plus any local helper modules (e.g., `df_functions_utils.py`).
 - Build tools and compilers if using the C++ code under `src/` and `include/`.
-- A compiled version of sandreco (legacy version) https://github.com/DUNE/sandreco
+- A compiled version of sandreco (legacy version) https://github.com/DUNE/sandreco for ROOT to load the necessary libraries for the "Snap_file_processing" step (a rootlogon.C is available in the corresponding directory)
 
 Notes
 - The notebooks rely on a local helper module `df_functions_utils.py` for dataframe extension and selection flags. Keep that module on `PYTHONPATH` or in the same folder as the notebooks.
 - Outputs (PDF/PNG plots and ROOT histogram files) are written under `Plots/` subfolders by default—ensure those directories exist or set `Out_dir` to an existing path.
 
 Contact / Maintainer
-- Owner: `Trenchcoat95` (repository `Solid_Hydrogen2`)
+- Owner: `federico.battisti@bo.infn.it` (repository `Solid_Hydrogen2`)
 
-License
-- (Add license information here if applicable)
